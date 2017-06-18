@@ -24,6 +24,8 @@ public class Typing : MonoBehaviour
     {
 		if(GameManager.isTyping) //turns on when isTyping is true
         {
+            GameManager.playerHealth = -healthLoss * Time.deltaTime; // hurts player
+
             foreach (char c in Input.inputString) //grabs player key inputs
             {
                 if(c == "\b"[0]) // \b is backspace, used to delete
@@ -51,8 +53,6 @@ public class Typing : MonoBehaviour
                         response.text += c; //adds input to text
                     }
                 }
-                GameManager.playerHealth = -healthLoss * Time.deltaTime; // hurts player
-                //Debug.Log(GameManager.playerHealth);
             }
         }
 	}
