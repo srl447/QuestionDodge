@@ -24,7 +24,7 @@ public class Typing : MonoBehaviour
     {
 		if(GameManager.isTyping) //turns on when isTyping is true
         {
-            GameManager.playerHealth = -healthLoss * Time.deltaTime; // hurts player
+            GameManager.playerHealth += -healthLoss * Time.deltaTime; // hurts player
 
             foreach (char c in Input.inputString) //grabs player key inputs
             {
@@ -60,13 +60,17 @@ public class Typing : MonoBehaviour
     IEnumerator clearWords() //fades words and clears text
     {
         yield return new WaitForSecondsRealtime(.1f);
-        for (int i = 0; i < 100; i++)
+
+        for (int i = 0; i < 100; i++) //fades text by reducing alpha value
         { 
             textColor.a -= .1f;
             yield return new WaitForEndOfFrame();
             response.color = textColor;
         }
-        
+
+        GameManager.answerList.Add(response.text); //stores the answer in an arraylist
+
+        //resets text back
         response.text = "";
         textColor.a = 1f;
         response.color = textColor;

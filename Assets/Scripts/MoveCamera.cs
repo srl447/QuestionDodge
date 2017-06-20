@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour 
 {
-    //Vector3 oldPos;
+
     Vector3 newRot, newPos;
-    //Quaternion oldRot;
+
     
     bool moving;
 
@@ -24,7 +24,7 @@ public class MoveCamera : MonoBehaviour
                 moving = false;
                 GameManager.isTyping = true;
             }
-            GameManager.playerHealth = -healthLoss * Time.deltaTime; //decreases health
+            GameManager.playerHealth += -healthLoss * Time.deltaTime; //decreases health
         }
     }
 
@@ -33,9 +33,7 @@ public class MoveCamera : MonoBehaviour
         if (collision.gameObject.tag == "Words")
         {
             GetComponent<Movement>().enabled = !GetComponent<Movement>().enabled;
-            //stores current position/rotation
-           // oldPos = transform.position;
-            //oldRot = transform.rotation;
+
 
             //grabs the location/rotation of the person who spawned words
             Vector3 spawnPos = collision.gameObject.GetComponent<WordMoves>().spawnOrigin.transform.position;
@@ -50,6 +48,9 @@ public class MoveCamera : MonoBehaviour
             //starts the movement
             moving = true;
             StartCoroutine(CameraRotate());
+
+            //adds question to arraylist of questions
+            GameManager.questionList.Add(collision.gameObject.GetComponent<WordString>().question);
         }
     }
 
