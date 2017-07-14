@@ -8,7 +8,7 @@ public class WinScript : MonoBehaviour
 
 	void OnTriggerEnter(Collider coll)
     {
-        if (collider.gameObject.tag = "Car")
+        if (coll.gameObject.tag == "Car")
         {
             SceneManager.LoadScene(2);
         }
