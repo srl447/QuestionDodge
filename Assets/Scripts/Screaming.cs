@@ -10,6 +10,8 @@ public class Screaming : MonoBehaviour {
 
     bool hasScreamed;
 
+    public float range;
+
 	void Update ()
     {
         if (!hasScreamed) //checking to see if they have sent out words yet
@@ -35,10 +37,10 @@ public class Screaming : MonoBehaviour {
                 Ray sight = new Ray(transform.position, sightAngle); //creates ray
                 RaycastHit sightHit = new RaycastHit(); //variable to store ray information
 
-                Debug.DrawRay(sight.origin, sight.direction * 10f, Color.yellow); //draws a raycast in the editor
+                Debug.DrawRay(sight.origin, sight.direction * range, Color.yellow); //draws a raycast in the editor
 
                 //spawns words if player enters sights
-                if (Physics.Raycast(sight, out sightHit, 10f, playerMask))
+                if (Physics.Raycast(sight, out sightHit, range, playerMask))
                 {
                     GameObject newWord = Instantiate(word) as GameObject;
                     newWord.GetComponent<WordMoves>().spawnOrigin = gameObject; //stores what Game Object spawned it

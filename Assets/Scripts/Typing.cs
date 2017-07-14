@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class Typing : MonoBehaviour
 {
 
-    public Text response; //text for typing
+    public Text response, question; //text for typing
 
     public float healthLoss; //speed of health loss
+    int questionNum;
 
-    Color textColor; //color to allow fading
+    Color textColor, questionColor; //color to allow fading
 	
 	void Start ()
     {
         textColor = Color.black;
+        questionColor = Color.white;
         response.text = "";
+        question.text = "";
         response.color = textColor;
+        question.color = questionColor;
+        questionNum = 0;
 	}
 	
 	// Update is called once per frame
@@ -24,6 +29,7 @@ public class Typing : MonoBehaviour
     {
 		if(GameManager.isTyping) //turns on when isTyping is true
         {
+            question.text = (string)GameManager.questionList[questionNum];
             GameManager.playerHealth += -healthLoss * Time.deltaTime; // hurts player
 
             foreach (char c in Input.inputString) //grabs player key inputs
@@ -64,15 +70,21 @@ public class Typing : MonoBehaviour
         for (int i = 0; i < 100; i++) //fades text by reducing alpha value
         { 
             textColor.a -= .1f;
+            questionColor.a -= .1f;
             yield return new WaitForEndOfFrame();
             response.color = textColor;
+            question.color = questionColor;
         }
 
         GameManager.answerList.Add(response.text); //stores the answer in an arraylist
 
         //resets text back
         response.text = "";
+        question.text = "";
         textColor.a = 1f;
+        questionColor.a = 1f;
         response.color = textColor;
+        question.color = questionColor;
+        questionNum++;
     }
 }
